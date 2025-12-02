@@ -12,12 +12,21 @@ export interface MatrixData {
 
 export interface Question {
   id: number;
-  topic: string; // e.g., "Práctica 11", "Práctica 14"
+  topic: string; 
   text: string;
   matrix?: MatrixData;
   codeSnippet?: string;
   options: Option[];
   explanation: string;
+}
+
+export interface Quiz {
+  id: string;
+  title: string;
+  description: string;
+  icon: 'geometry' | 'transform' | 'spectrum';
+  difficulty: 'Básico' | 'Intermedio' | 'Avanzado';
+  questions: Question[];
 }
 
 export enum AppView {
@@ -27,6 +36,7 @@ export enum AppView {
 }
 
 export interface QuizState {
+  activeQuizId: string | null;
   currentQuestionIndex: number;
   score: number;
   answers: { questionId: number; selectedOptionId: string; isCorrect: boolean }[];

@@ -1,15 +1,16 @@
 import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { QuizState } from '../types';
-import { RotateCcw, Trophy, Award } from 'lucide-react';
+import { RotateCcw, Trophy, Award, Home } from 'lucide-react';
 
 interface ResultsProps {
   quizState: QuizState;
   totalQuestions: number;
   onRestart: () => void;
+  onGoHome: () => void;
 }
 
-export const Results: React.FC<ResultsProps> = ({ quizState, totalQuestions, onRestart }) => {
+export const Results: React.FC<ResultsProps> = ({ quizState, totalQuestions, onRestart, onGoHome }) => {
   const correctCount = quizState.score;
   const incorrectCount = totalQuestions - correctCount;
   const percentage = Math.round((correctCount / totalQuestions) * 100);
@@ -22,14 +23,14 @@ export const Results: React.FC<ResultsProps> = ({ quizState, totalQuestions, onR
   const COLORS = ['#4f46e5', '#ef4444'];
 
   return (
-    <div className="max-w-4xl mx-auto p-4 animate-in zoom-in-95 duration-500">
+    <div className="max-w-4xl mx-auto p-4 animate-in zoom-in-95 duration-500 w-full">
       <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100">
         
         <div className="bg-indigo-600 p-8 text-center text-white relative overflow-hidden">
           <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
           <Trophy className="w-16 h-16 mx-auto mb-4 text-yellow-300 drop-shadow-lg" />
           <h2 className="text-3xl font-bold mb-2 relative z-10">Evaluación Completada</h2>
-          <p className="text-indigo-200 relative z-10">Has finalizado el test de Álgebra Lineal</p>
+          <p className="text-indigo-200 relative z-10">Has finalizado este módulo de Álgebra Lineal</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 p-8 items-center">
@@ -53,16 +54,25 @@ export const Results: React.FC<ResultsProps> = ({ quizState, totalQuestions, onR
                </div>
             </div>
 
-            <button
-              onClick={onRestart}
-              className="w-full bg-slate-900 text-white py-4 rounded-xl font-semibold shadow-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2 group"
-            >
-              <RotateCcw className="w-5 h-5 group-hover:-rotate-180 transition-transform duration-500" />
-              Intentar Nuevamente
-            </button>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                onClick={onRestart}
+                className="flex-1 bg-slate-900 text-white py-3 rounded-xl font-semibold shadow-lg hover:bg-slate-800 transition-all flex items-center justify-center gap-2 group"
+              >
+                <RotateCcw className="w-5 h-5 group-hover:-rotate-180 transition-transform duration-500" />
+                Reintentar
+              </button>
+              <button
+                onClick={onGoHome}
+                className="flex-1 bg-white border-2 border-slate-200 text-slate-700 py-3 rounded-xl font-semibold hover:bg-slate-50 hover:border-slate-300 transition-all flex items-center justify-center gap-2"
+              >
+                <Home className="w-5 h-5" />
+                Inicio
+              </button>
+            </div>
           </div>
 
-          <div className="h-80 w-full bg-slate-50 rounded-2xl border border-slate-100 p-4">
+          <div className="h-64 md:h-80 w-full bg-slate-50 rounded-2xl border border-slate-100 p-4">
              <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
